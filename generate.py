@@ -1,10 +1,12 @@
-import openai  # OpenAI Python library to make API calls
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))  # OpenAI Python library to make API calls
 import requests  # used to download images
 import os  # used to access filepaths
 from PIL import Image  # used to print and edit images
 
 # set API key
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+
 
 # set a directory to save DALL·E images to
 image_dir_name = "images"
@@ -24,12 +26,10 @@ print(f"{image_dir=}")
 
 prompt = "Draw me a liger having tea with a lion and a tiger"
 # call the OpenAI API
-generation_response = openai.Image.create(
-    prompt=prompt,
-    n=1,
-    size="1024x1024",
-    response_format="url",
-)
+generation_response = client.images.generate(prompt=prompt,
+n=1,
+size="1024x1024",
+response_format="url")
 
 # print response
 print(generation_response)
